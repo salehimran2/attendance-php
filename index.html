@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Attendance tracker</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+
+    <div id="page-container">
+      <h1>Attendance tracker</h1>
+      <form id="attendee-input" onsubmit="addAttendee(this);">
+        <table>
+          <tr>
+            <td>
+              <input name="name" placeholder="name" type="text">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input name="notes" placeholder="notes (optional)" type="text">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="submit" value="sign in">
+            </td>
+          </tr>
+        </table>
+      </form>
+      <br>
+      <div id="attendees-container"></div>
+    </div>
+
+
+    <!-- JS -->
+
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+    <script>
+
+      "use strict";
+
+      var attendeesElem = document.getElementById("attendees-container");
+
+      function clearHist() {
+        $.post('clear_history.php', '', function (response) {
+          if (response) {
+            showAttendees();
+          }
+        });
+      }
+
+      function showAttendees() {
+        $.post('show_attendees.php', '', function (response) {
+          attendeesElem.innerHTML = response;
+        });
+      };
+
+      function addAttendee(form) {
+        $.post('add_attendee.php', $(form).serialize(), function (response) {
+          if (response) {
+            showAttendees();
+            form.reset();
+          }
+          else {
+            $('form').effect('shake', { 
+              times: 2, distance: 2, direction: "up" 
+            }, 200);
+          }
+        });
+      };
+
+      $(function () {
+
+        // Prevent form submissions from refreshing the page
+        $('form').on('submit', function (e) {
+          e.preventDefault();
+        });
+
+        // Show attendance list on load and refresh every three minutes
+        showAttendees();
+        var interval = setInterval(showAttendees, 180000); // 3 min
+      });
+    </script>
+
+  </body>
+</html>

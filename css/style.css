@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,400i,700');
+
+
+* {
+  font-family: 'Roboto Mono', monospace;
+}
+
+body {
+  margin: 0;
+  font-size: 1em;
+}
+
+#page-container {
+  padding: 1em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+#attendee-input table td {
+  padding: 0.1em;
+}
+
+input {
+  padding: 0.1em;
+}
+
+#attendees-container th, td {
+  padding: 1em;
+  text-align: left;
+}
+
+#attendees-container td {
+  border-top: 1px solid #ccc;
+}
+
+#attendees-container div {
+  font-style: italic;
+  padding: 10px;
+}
